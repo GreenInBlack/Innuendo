@@ -393,44 +393,108 @@ namespace Innuendo
             // I need to manually enter the data from the text boxes into an entry file, coded below depending on the genre of the game
             // the character will be participating in.
 
-            Mortal mortalentry = new Mortal(false);
-            Vampire vampentry = new Vampire(false);
+            bool error_found = false;
+            string tabs_with_errors = null;
 
             int entry_index = -1;
 
             if (genreTextBox.Text.ToLower().Equals("mortal"))
             {
-                mortalentry.char_Name.Text = characterTextBox.Text;
-                mortalentry.player_Name.Text = playerTextBox.Text;
-                mortalentry.nature.Text = natureTextBox.Text;
-                mortalentry.age.Numeric = int.Parse(ageTextBox.Text);
-                mortalentry.genre.Text = genreTextBox.Text;
-                mortalentry.demeanor.Text = demeanorTextBox.Text;
-                mortalentry.gender.Text = genderTextBox.Text;
-                mortalentry.faction.Text = factionTextBox.Text;
-                mortalentry.phy_Strength.Numeric = int.Parse(strengthTextBox.Text);
-                mortalentry.phy_Stamina.Numeric = int.Parse(staminaTextBox.Text);
-                mortalentry.phy_Dexterity.Numeric = int.Parse(dexterityTextBox.Text);
-                mortalentry.men_Wit.Numeric = int.Parse(witTextBox.Text);
-                mortalentry.men_Intellect.Numeric = int.Parse(intellectTextBox.Text);
-                mortalentry.men_Resolve.Numeric = int.Parse(resolveTextBox.Text);
-                mortalentry.soc_Charisma.Numeric = int.Parse(charismaTextBox.Text);
-                mortalentry.soc_Manipulation.Numeric = int.Parse(manipulationTextBox.Text);
-                mortalentry.soc_Composure.Numeric = int.Parse(composureTextBox.Text);
-                mortalentry.temp_Willpower.Numeric = int.Parse(tWillpowerTextBox.Text);
-                mortalentry.perm_Willpower.Numeric = int.Parse(pWillpowerTextBox.Text);
-                mortalentry.virtue_Self_Control.Numeric = int.Parse(virtueSelfTextBox.Text);
-                mortalentry.virtue_Courage.Numeric = int.Parse(virtueCourageTextBox.Text);
-                mortalentry.virtue_Conscience.Numeric = int.Parse(virtueConscienceTextBox.Text);
-                mortalentry.morality.Text = morality.Text;
-                mortalentry.morality.Numeric = int.Parse(moralityTextBox.Text);
-                mortalentry.merits.Numeric = int.Parse(meritTextBox.Text);
-                mortalentry.flaws.Numeric = int.Parse(flawTextBox.Text);
-                mortalentry.background_story.Description = StoryTextBox.Text;
-                mortalentry.spent_xp.Numeric = int.Parse(txtSpentXP.Text);
-                mortalentry.unspent_xp.Numeric = int.Parse(txtUnspentXP.Text);
+                Mortal mortalentry = new Mortal(false);
 
-
+                try
+                {
+                    mortalentry.char_Name.Text = characterTextBox.Text;
+                    mortalentry.player_Name.Text = playerTextBox.Text;
+                    mortalentry.nature.Text = natureTextBox.Text;
+                    mortalentry.age.Numeric = int.Parse(ageTextBox.Text);
+                    mortalentry.genre.Text = genreTextBox.Text;
+                    mortalentry.demeanor.Text = demeanorTextBox.Text;
+                    mortalentry.gender.Text = genderTextBox.Text;
+                    mortalentry.faction.Text = factionTextBox.Text;
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nCharacter Information";
+                }
+                try
+                {
+                    mortalentry.phy_Strength.Numeric = int.Parse(strengthTextBox.Text);
+                    mortalentry.phy_Stamina.Numeric = int.Parse(staminaTextBox.Text);
+                    mortalentry.phy_Dexterity.Numeric = int.Parse(dexterityTextBox.Text);
+                    mortalentry.men_Wit.Numeric = int.Parse(witTextBox.Text);
+                    mortalentry.men_Intellect.Numeric = int.Parse(intellectTextBox.Text);
+                    mortalentry.men_Resolve.Numeric = int.Parse(resolveTextBox.Text);
+                    mortalentry.soc_Charisma.Numeric = int.Parse(charismaTextBox.Text);
+                    mortalentry.soc_Manipulation.Numeric = int.Parse(manipulationTextBox.Text);
+                    mortalentry.soc_Composure.Numeric = int.Parse(composureTextBox.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nPrimary Attributes";
+                }
+                try
+                {
+                    mortalentry.temp_Willpower.Numeric = int.Parse(tWillpowerTextBox.Text);
+                    mortalentry.perm_Willpower.Numeric = int.Parse(pWillpowerTextBox.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nWillpower";
+                }
+                try
+                {
+                    mortalentry.virtue_Self_Control.Numeric = int.Parse(virtueSelfTextBox.Text);
+                    mortalentry.virtue_Courage.Numeric = int.Parse(virtueCourageTextBox.Text);
+                    mortalentry.virtue_Conscience.Numeric = int.Parse(virtueConscienceTextBox.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nVirtues";
+                }
+                try
+                {
+                    mortalentry.morality.Text = morality.Text;
+                    mortalentry.morality.Numeric = int.Parse(moralityTextBox.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nMorality";
+                }
+                try
+                {
+                    mortalentry.merits.Numeric = int.Parse(meritTextBox.Text);
+                    mortalentry.flaws.Numeric = int.Parse(flawTextBox.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nMerits and Flaws";
+                }
+                try
+                {
+                    mortalentry.background_story.Description = StoryTextBox.Text;
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nBackground Story";
+                }
+                try
+                {
+                    mortalentry.spent_xp.Numeric = int.Parse(txtSpentXP.Text);
+                    mortalentry.unspent_xp.Numeric = int.Parse(txtUnspentXP.Text);
+                }
+                catch (FormatException error)
+                {
+                    error_found = true;
+                    tabs_with_errors += "\nCharacter Experience";
+                }
                 int counterAbility = 0;
                 int counterBackground = 0;
                 int counterTalent = 0;
@@ -660,24 +724,33 @@ namespace Innuendo
 
                 }
 
-                if (entry_index > -1)
+                if (!error_found)
                 {
-                    theDataBase.characterList.RemoveAt(entry_index);
-                    theDataBase.characterList.Insert(entry_index, mortalentry);
-                    theDataBase.characterList.Sort();
+                    if (entry_index > -1)
+                    {
+                        theDataBase.characterList.RemoveAt(entry_index);
+                        theDataBase.characterList.Insert(entry_index, mortalentry);
+                        theDataBase.characterList.Sort();
+                    }
+                    else
+                    {
+                        theDataBase.characterList.Add(mortalentry);
+                        theDataBase.characterList.Sort();
+                    }
                 }
                 else
                 {
-                    theDataBase.characterList.Add(mortalentry);
-                    theDataBase.characterList.Sort();
+                    MessageBox.Show("One or more values in the following areas were empty or invalid; please try again." + 
+                        "\n" + tabs_with_errors, "ERROR", MessageBoxButtons.OK);
                 }
-
                 FillData();
 
             }
 
             else if (genreTextBox.Text.ToLower().Equals("vampire"))
             {
+                Vampire vampentry = new Vampire(false);
+
                 try
                 {
                     // Assigning values from the text boxes in the form to the variables for the character stored in the database array.
